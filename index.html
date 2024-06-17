@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>To do App</h1>
+    <h3>add to do's !</h3>
+    <select id="selectTask">
+        <option>Select task</option>
+    </select><br>
+    category:<select id="category">
+        <option>Select category</option>
+    </select><br>
+    priority:<select id="priority">
+        <option>Select priority</option>
+    </select><br>
+    deadline: <input type="date" id="date"><br>
+    task description: <input type="text" id="text"><br>
+    <button id="addtask">Add task</button><br>
+    <button id="cleartask">clear task</button>
+    <script>
+        let selectTask = document.getElementById("selectTask");
+        let selectcategory = document.getElementById("category");
+        let selectpriority = document.getElementById("priority");
+        let selectdeadline = document.getElementById("date");
+        let selectdescription = document.getElementById("text");
+
+
+        function display(_dropdownname, _property) {
+            fetch("http://localhost:8083/api/todos")
+            .then(response => response.json())
+            .then(data => {
+                const uniqueValues = new Set();
+                data.forEach(item => {
+                    if (!uniqueValues.has(item[_property])) {
+                        uniqueValues.add(item[_property]);
+                        let opt = document.createElement("option");
+                        opt.textContent = item[_property];
+                        opt.value = item[_property];
+                        _dropdownname.appendChild(opt);
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+        }
+        display(selectcategory, 'category');
+        display(selectpriority, 'priority');
+        // function display() {
+
+        // fetch("http://localhost:8083/api/todos")
+        // .then(Response => Response.json())
+        // .then(data =>{
+        //     for (let i = 0; i < data.length; i++) {
+        //         let opt = document.createElement("option");
+        //          opt.textContent = data[i].priority;
+        //          opt.value = data[i].priority;
+        //          selectpriority.appendChild (opt)}
+        // })} display()
+    </script>
+
+</body>
+
+</html>

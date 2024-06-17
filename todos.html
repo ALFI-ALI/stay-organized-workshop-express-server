@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1></h1>
+    <select id="user">
+        <option>Select user</option>
+</select>
+<button id="submit">Select task</button>
+<script>
+    let users = document.getElementById("user");
+    let submit = document.getElementById("submit");
+    fetch("http://localhost:8083/api/users")
+    .then(response => response.json())
+    .then(data =>{
+            for (let i = 0; i < data.length; i++) {
+                let opt = document.createElement("option");
+                 opt.textContent = data[i].name;
+                 opt.value = data[i].name;
+                 users.appendChild (opt)}});
+                 
+</script>
+</body>
+</html>
